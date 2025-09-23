@@ -50,3 +50,9 @@ if page == "Home":
             st.bar_chart(top_Company.set_index('Company'))
         else:
             st.write("No 'Company' column detected.")
+
+    with col2:
+        if 'Ex-Showroom_Price' in df.columns:
+            fig = px.histogram(df, x='Ex-Showroom_Price', title="Price Distribution")
+            st.plotly_chart(fig)
+
