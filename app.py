@@ -13,7 +13,16 @@ def load_data():
     return df
 
 df = load_data()
-st.write(df.head())
+
 
 # sidebar
 page = st.sidebar.radio("Choose", ["Home", "Cars Explorer", "Compare Cars"])
+
+st.sidebar.markdown("---")
+
+if page == "Home":
+    st.title("🚗 Car Dashboard -- Home")
+    st.markdown("This dashboard helps you explore the cars dataset and compare models side-by-side.")
+
+    st.header("About the Data")
+    st.markdown(f"**Rows:** {df.shape[0]}")
