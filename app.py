@@ -14,3 +14,6 @@ def load_data():
 
 df = load_data()
 st.write(df.head())
+
+# sidebar
+page = st.sidebar.radio("Choose", ["Home", "Cars Explorer", "Compare Cars"])
