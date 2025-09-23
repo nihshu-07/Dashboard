@@ -40,3 +40,13 @@ if page == "Home":
 
     st.header("Basic statistics for numeric columns")
     st.dataframe(df.select_dtypes(include=[np.number]).describe().T)
+
+    st.header("Quick charts")
+    col1, col2 = st.columns(2)
+    with col1:
+        if "Company" is not None :
+            top_Company = df['Company'].value_counts().sort_values(ascending=False).head(10).reset_index()
+            top_Company.columns = ['Company', 'Count']
+            st.bar_chart(top_Company.set_index('Company'))
+        else:
+            st.write("No 'Company' column detected.")
