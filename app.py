@@ -42,7 +42,7 @@ if page == "Home":
     st.dataframe(df.select_dtypes(include=[np.number]).describe().T)
 
     st.header("Quick charts")
-    col1= st.columns(1)
+    col1,col2= st.columns(2)
     with col1:
         if "Company" is not None :
             top_Company = df['Company'].value_counts().sort_values(ascending=False).head(10).reset_index()
