@@ -29,3 +29,14 @@ if page == "Home":
     st.markdown(f"**Columns:** {df.shape[1]}")
     st.header("Sample data")
     st.dataframe(df.head(10))
+
+    st.header("Missing values summary")
+    miss = (df.isna().sum() / len(df)).sort_values(ascending=False)
+    miss = miss[miss > 0]
+    if not miss.empty:
+        st.table(miss)
+    else:
+        st.write("No missing values detected (in the filtered data).")
+
+    st.header("Basic statistics for numeric columns")
+    st.dataframe(df.select_dtypes(include=[np.number]).describe().T)
