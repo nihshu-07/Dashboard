@@ -26,3 +26,6 @@ if page == "Home":
 
     st.header("About the Data")
     st.markdown(f"**Rows:** {df.shape[0]}")
+    st.markdown(f"**Columns:** {df.shape[1]}")
+    st.header("Sample data")
+    st.dataframe(df.head(10))
