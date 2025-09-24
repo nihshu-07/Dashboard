@@ -85,15 +85,6 @@ elif page == "Cars Explorer":
         models = ["All"] + sorted(df["Model"].dropna().unique().tolist())
     sel_models = st.sidebar.selectbox("Model", models)
 
-        # --- FUEL TYPE Filter ---
-    fuel_types = ["All"] + sorted(df["Fuel_Type"].dropna().unique().tolist())
-    sel_fuel = st.sidebar.selectbox("Fuel_Type", fuel_types)
-
-        # --- PRICE RANGE Filter ---
-    min_price = int(df["Ex-Showroom_Price"].min())
-    max_price = int(df["Ex-Showroom_Price"].max())
-    sel_price = st.sidebar.slider("Price range", min_price, max_price, (min_price, max_price))
-
         # --- SELECT BUTTON ---
     apply_filters = st.sidebar.button("Select")
 
@@ -103,11 +94,6 @@ elif page == "Cars Explorer":
             filtered = filtered[filtered["Company"]== sel_makes]
         if sel_models:
             filtered = filtered[filtered["Model"] == sel_models]
-        if sel_fuel:
-            filtered = filtered[filtered["Fuel_Type"] == sel_fuel]
-        if sel_price:
-            filtered = filtered[(filtered["Ex-Showroom_Price"] >= sel_price[0]) & (filtered["Ex-Showroom_Price"] <= sel_price[1])]
-
         if filtered.empty:
             st.warning("No cars match the selected filters.")
         else:
