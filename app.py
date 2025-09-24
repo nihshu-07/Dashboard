@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import matplotlib.pyplot as plt
-
+import seaborn as sns
 st.set_page_config(page_title="Cars Dashboard", layout='wide')
 
 DATA_PATH = "car_cleaned.csv"  
@@ -98,5 +98,20 @@ elif page == "Cars Explorer":
             st.warning("No cars match the selected filters.")
         else:
             st.dataframe(filtered)
+
+            st.subheader("💰 Price Distribution")
+            fig, ax = plt.subplots()
+            sns.histplot(filtered["Ex-Showroom_Price"], bins=15, kde=True, ax=ax)
+            ax.set_xlabel("Price")
+            ax.set_ylabel("Count")
+            st.pyplot(fig)
+
+            st.subheader("⛽ Fuel Type Distribution")
+            fuel_counts = filtered["Fuel_Type"].value_counts()
+            st.bar_chart(fuel_counts)
+
+            st.subheader("🚘 Number of Variants per Model")
+            st.bar_chart(filtered["Model"].value_counts())
+
     else:
         st.info("Apply filters by clicking the **Select** button on the left.")
