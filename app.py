@@ -119,5 +119,7 @@ elif page == "Cars Explorer":
         st.info("Apply filters by clicking the **Select** button on the left.")
 
 elif page == "Compare Cars":
-    st.title("⚖️ Compare Cars")
+    st.markdown("""<div style='text-align: center; font-size: 45px; font-weight: bold; margin: 20px 0;font-family: Arial, Helvetica, sans-serif;'>
+    ⚖️ Compare Cars 
+    """, unsafe_allow_html=True)
     st.markdown("Select two cars (from the filtered candidates) to compare specs side-by-side.")
