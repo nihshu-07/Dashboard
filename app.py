@@ -114,4 +114,10 @@ elif page == "Cars Explorer":
     if sel_price:
         filtered = filtered[(filtered["Ex-Showroom_Price"] >= sel_price[0]) & (filtered["Ex-Showroom_Price"] <= sel_price[1])]
 
+    st.markdown(f"**Showing {len(filtered)} vehicles**")
+    if "Company" in df.columns:
+        st.subheader("Top makes (in result)")
+        st.bar_chart(filtered["Company"].value_counts().nlargest(10))
 
+    st.subheader("Result sample")
+    st.dataframe(filtered.reset_index(drop=True).head(50))
