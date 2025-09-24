@@ -65,6 +65,11 @@ if page == "Home":
     else:
      st.warning("Required columns 'Ex-Showroom_Price' or 'Company' not found in dataset.")
 
+    st.markdown("---")
+    st.markdown("**Tip:** Use the 'Cars Explorer' page to filter and find models. Then go to 'Compare Cars' to put two vehicles side-by-side.")
+
+
+
 
 
 
