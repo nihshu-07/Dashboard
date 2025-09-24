@@ -17,7 +17,7 @@ df = load_data()
 
 
 # sidebar
-page = st.sidebar.radio("Choose", ["Home", "Cars Explorer", "Compare Cars"])
+page = st.sidebar.radio("Choose", ["Home", "Cars Explorer"])
 
 st.sidebar.markdown("---")
 
@@ -117,21 +117,3 @@ elif page == "Cars Explorer":
 
     else:
         st.info("Apply filters by clicking the **Select** button on the left.")
-
-elif page == "Compare Cars":
-    st.markdown("""<div style='text-align: center; font-size: 45px; font-weight: bold; margin: 20px 0;font-family: Arial, Helvetica, sans-serif;'>
-    ⚖️ Compare Cars 
-    """, unsafe_allow_html=True)
-    st.markdown("Select two cars (from the filtered candidates) to compare specs side-by-side.")
-    with st.sidebar.expander("Narrow candidates (Compare page)", expanded=False):
-        cmakes = sorted(df["Company"].dropna().unique().tolist()) if "Company" else []
-        cmp_sel_makes = st.multiselect("Make", cmakes, default=None, key='cmp_make')
-
-        if "Model" in df.columns:
-            if cmp_sel_makes:
-                cmods = df[df["Company"].isin(cmp_sel_makes)]["Model"].dropna().unique().tolist()
-            else:
-                cmods = df["Model"].dropna().unique().tolist()
-            cmp_sel_models = st.multiselect("Model", sorted(cmods), default=None, key='cmp_model')
-        else:
-            cmp_sel_models = None
