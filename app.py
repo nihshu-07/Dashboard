@@ -76,29 +76,23 @@ elif page == "Cars Explorer":
     st.markdown("""<div style = 'text-align: center;'>Use the sidebar filters below to narrow the dataset.
     """, unsafe_allow_html=True)
     with st.sidebar.expander("Cars Explorer Filters", expanded=True):
-        if "Company" is not None:
+        if "Company" in df.columns:
             makes = sorted(df["Company"].dropna().unique().tolist())
-            sel_makes = st.selectbox("Company", makes, default=None)
+            sel_makes = st.selectbox("Company", makes)
         else:
             sel_makes = None
-        if "Model" is not None:
+        if "Model" in df.columns:
             if sel_makes:
-                mod_candidates = df[df["Company"].isin(sel_makes)]["Model"].dropna().unique().tolist()
+                mod_candidates = df[df["Company"].isin([sel_makes])]["Model"].dropna().unique().tolist()
+
             else:
                 mod_candidates = df["Model"].dropna().unique().tolist()
-                sel_models = st.selectbox("Model", sorted(mod_candidates), default=None)
+                sel_models = st.selectbox("Model", sorted(mod_candidates))
         else:
             sel_models = None
 
-        if "Fuel_Type" is not None:
+        if "Fuel_Type" in df.columns:
             fuels = sorted(df["Fuel_Type"].dropna().unique().tolist())
-            sel_fuel = st.selectbox("Fuel_Type", fuels, default=None)
+            sel_fuel = st.selectbox("Fuel_Type", fuels)
         else:
             sel_fuel = None
-
-
-
-
-
-
-
