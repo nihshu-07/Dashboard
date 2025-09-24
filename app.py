@@ -111,7 +111,7 @@ elif page == "Cars Explorer":
             st.bar_chart(fuel_counts)
 
             st.subheader("🚘 Number of Variants per Model")
-            st.bar_chart(filtered["Model"].value_counts())
+            st.bar_chart(filtered["Variant"].value_counts())
 
     else:
         st.info("Apply filters by clicking the **Select** button on the left.")
