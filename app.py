@@ -98,12 +98,14 @@ elif page == "Cars Explorer":
             st.warning("No cars match the selected filters.")
         else:
             st.dataframe(filtered)
+            
+            st.subheader("🛠️ Drivetrain Distribution")
 
-            st.subheader("💰 Price Distribution")
+            drivetrain_counts = filtered["Drivetrain"].value_counts()
             fig, ax = plt.subplots()
-            sns.histplot(filtered["Ex-Showroom_Price"], bins=15, kde=True, ax=ax)
-            ax.set_xlabel("Price")
-            ax.set_ylabel("Count")
+            drivetrain_counts.sort_values().plot(kind="barh", color="skyblue", ax=ax)
+            ax.set_xlabel("Number of Cars")
+            ax.set_ylabel("Drivetrain")
             st.pyplot(fig)
 
             st.subheader("⛽ Fuel Type Distribution")
