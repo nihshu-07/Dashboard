@@ -117,3 +117,7 @@ elif page == "Cars Explorer":
 
     else:
         st.info("Apply filters by clicking the **Select** button on the left.")
+
+elif page == "Compare Cars":
+    st.title("⚖️ Compare Cars")
+    st.markdown("Select two cars (from the filtered candidates) to compare specs side-by-side.")
