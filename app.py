@@ -68,8 +68,12 @@ if page == "Home":
     st.markdown("---")
     st.markdown("**Tip:** Use the 'Cars Explorer' page to filter and find models. Then go to 'Compare Cars' to put two vehicles side-by-side.")
 
-
-
+elif page == "Cars Explorer":
+    st.markdown("""<div style='text-align: center; font-size: 50px; font-weight: bold; margin: 20px 0;'>
+    🔍 Car Explorer 
+    """, unsafe_allow_html=True)
+    st.markdown("""<div style = 'text-align: center;'>Use the sidebar filters below to narrow the dataset.
+    """, unsafe_allow_html=True)
 
 
 
