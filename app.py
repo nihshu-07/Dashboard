@@ -75,49 +75,42 @@ elif page == "Cars Explorer":
     """, unsafe_allow_html=True)
     st.markdown("""<div style = 'text-align: center;'>Use the sidebar filters below to narrow the dataset.
     """, unsafe_allow_html=True)
-    with st.sidebar.expander("Cars Explorer Filters", expanded=True):
-        if "Company" in df.columns:
-            makes = sorted(df["Company"].dropna().unique().tolist())
-            sel_makes = st.selectbox("Company", makes)
+    makes = ["All"] + sorted(df["Company"].dropna().unique().tolist())
+    sel_makes = st.sidebar.selectbox("Company", makes)
+
+        # --- MODEL (depends on selected company) ---
+    if sel_makes != "All":
+        models = ["All"] + sorted(df[df["Company"] == sel_makes]["Model"].dropna().unique().tolist())
+    else:
+        models = ["All"] + sorted(df["Model"].dropna().unique().tolist())
+    sel_models = st.sidebar.selectbox("Model", models)
+
+        # --- FUEL TYPE Filter ---
+    fuel_types = ["All"] + sorted(df["Fuel_Type"].dropna().unique().tolist())
+    sel_fuel = st.sidebar.selectbox("Fuel_Type", fuel_types)
+
+        # --- PRICE RANGE Filter ---
+    min_price = int(df["Ex-Showroom_Price"].min())
+    max_price = int(df["Ex-Showroom_Price"].max())
+    sel_price = st.sidebar.slider("Price range", min_price, max_price, (min_price, max_price))
+
+        # --- SELECT BUTTON ---
+    apply_filters = st.sidebar.button("Select")
+
+    if apply_filters:
+        filtered = df.copy()
+        if sel_makes:
+            filtered = filtered[filtered["Company"]== sel_makes]
+        if sel_models:
+            filtered = filtered[filtered["Model"] == sel_models]
+        if sel_fuel:
+            filtered = filtered[filtered["Fuel_Type"] == sel_fuel]
+        if sel_price:
+            filtered = filtered[(filtered["Ex-Showroom_Price"] >= sel_price[0]) & (filtered["Ex-Showroom_Price"] <= sel_price[1])]
+
+        if filtered.empty:
+            st.warning("No cars match the selected filters.")
         else:
-            sel_makes = None
-        if "Model" in df.columns:
-            if sel_makes:
-                mod_candidates = df[df["Company"].isin([sel_makes])]["Model"].dropna().unique().tolist()
-            else:
-                mod_candidates = df["Model"].dropna().unique().tolist()
-            
-            sel_models = st.selectbox("Model", sorted(mod_candidates))  
-        else:
-            sel_models = None
-
-        if "Fuel_Type" in df.columns:
-            fuels = sorted(df["Fuel_Type"].dropna().unique().tolist())
-            sel_fuel = st.selectbox("Fuel_Type", fuels)
-        else:
-            sel_fuel = None
-
-        if "Ex-Showroom_Price" in df.columns and pd.api.types.is_numeric_dtype(df['Ex-Showroom_Price']):
-            pmin = int(df['Ex-Showroom_Price'].min(skipna=True))
-            pmax = int(df['Ex-Showroom_Price'].max(skipna=True))
-            sel_price = st.slider("Price range", min_value=pmin, max_value=pmax, value=(pmin, pmax))
-        else:
-            sel_price = None
-
-    filtered = df.copy()
-    if sel_makes:
-        filtered = filtered[filtered["Company"]== sel_makes]
-    if sel_models:
-        filtered = filtered[filtered["Model"] == sel_models]
-    if sel_fuel:
-        filtered = filtered[filtered["Fuel_Type"] == sel_fuel]
-    if sel_price:
-        filtered = filtered[(filtered["Ex-Showroom_Price"] >= sel_price[0]) & (filtered["Ex-Showroom_Price"] <= sel_price[1])]
-
-    st.markdown(f"**Showing {len(filtered)} vehicles**")
-    if "Company" in df.columns:
-        st.subheader("Top makes (in result)")
-        st.bar_chart(filtered["Company"].value_counts().nlargest(10))
-
-    st.subheader("Result sample")
-    st.dataframe(filtered.reset_index(drop=True).head(50))
+            st.dataframe(filtered)
+    else:
+        st.info("Apply filters by clicking the **Select** button on the left.")
