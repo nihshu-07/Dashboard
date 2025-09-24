@@ -124,7 +124,7 @@ elif page == "Compare Cars":
     """, unsafe_allow_html=True)
     st.markdown("Select two cars (from the filtered candidates) to compare specs side-by-side.")
     with st.sidebar.expander("Narrow candidates (Compare page)", expanded=False):
-        cmakes = sorted(working_df[MAKE].dropna().unique().tolist()) if MAKE else []
+        cmakes = sorted(df["Company"].dropna().unique().tolist()) if "Company" else []
         cmp_sel_makes = st.multiselect("Make", cmakes, default=None, key='cmp_make')
 
         if "Model" in df.columns:
