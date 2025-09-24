@@ -96,3 +96,10 @@ elif page == "Cars Explorer":
             sel_fuel = st.selectbox("Fuel_Type", fuels)
         else:
             sel_fuel = None
+
+        if "Ex-Showroom_Price" in df.columns and pd.api.types.is_numeric_dtype(df['Ex-Showroom_Price']):
+            pmin = int(df['Ex-Showroom_Price'].min(skipna=True))
+            pmax = int(df['Ex-Showroom_Price'].max(skipna=True))
+            sel_price = st.slider("Price range", min_value=pmin, max_value=pmax, value=(pmin, pmax))
+        else:
+            sel_price = None
