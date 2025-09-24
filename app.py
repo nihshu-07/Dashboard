@@ -27,7 +27,7 @@ if page == "Home":
     """, unsafe_allow_html=True)
     st.markdown("""<div style = 'text-align: center;'> This dashboard helps you explore the cars dataset and compare models side-by-side.""", unsafe_allow_html=True)
     
-    
+
     st.markdown("""<h3>About the Data""",unsafe_allow_html=True)
     st.markdown(f"**Rows:** {df.shape[0]}")
     st.markdown(f"**Columns:** {df.shape[1]}")
@@ -75,6 +75,30 @@ elif page == "Cars Explorer":
     """, unsafe_allow_html=True)
     st.markdown("""<div style = 'text-align: center;'>Use the sidebar filters below to narrow the dataset.
     """, unsafe_allow_html=True)
+    with st.sidebar.expander("Cars Explorer Filters", expanded=True):
+        if "Company" is not None:
+            makes = sorted(df["Company"].dropna().unique().tolist())
+            sel_makes = st.selectbox("Company", makes, default=None)
+        else:
+            sel_makes = None
+        if "Model" is not None:
+            if sel_makes:
+                mod_candidates = df[df["Company"].isin(sel_makes)]["Model"].dropna().unique().tolist()
+            else:
+                mod_candidates = df["Model"].dropna().unique().tolist()
+                sel_models = st.selectbox("Model", sorted(mod_candidates), default=None)
+        else:
+            sel_models = None
+
+        if "Fuel_Type" is not None:
+            fuels = sorted(df["Fuel_Type"].dropna().unique().tolist())
+            sel_fuel = st.selectbox("Fuel_Type", fuels, default=None)
+        else:
+            sel_fuel = None
+
+
+
+
 
 
 
