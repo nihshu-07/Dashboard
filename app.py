@@ -84,10 +84,10 @@ elif page == "Cars Explorer":
         if "Model" in df.columns:
             if sel_makes:
                 mod_candidates = df[df["Company"].isin([sel_makes])]["Model"].dropna().unique().tolist()
-
             else:
                 mod_candidates = df["Model"].dropna().unique().tolist()
-                sel_models = st.selectbox("Model", sorted(mod_candidates))
+            
+            sel_models = st.selectbox("Model", sorted(mod_candidates))  
         else:
             sel_models = None
 
@@ -103,3 +103,15 @@ elif page == "Cars Explorer":
             sel_price = st.slider("Price range", min_value=pmin, max_value=pmax, value=(pmin, pmax))
         else:
             sel_price = None
+
+    filtered = df.copy()
+    if sel_makes:
+        filtered = filtered[filtered["Company"]== sel_makes]
+    if sel_models:
+        filtered = filtered[filtered["Model"] == sel_models]
+    if sel_fuel:
+        filtered = filtered[filtered["Fuel_Type"] == sel_fuel]
+    if sel_price:
+        filtered = filtered[(filtered["Ex-Showroom_Price"] >= sel_price[0]) & (filtered["Ex-Showroom_Price"] <= sel_price[1])]
+
+
