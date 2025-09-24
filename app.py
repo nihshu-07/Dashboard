@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Cars Dashboard", layout='wide')
 
@@ -21,8 +22,10 @@ page = st.sidebar.radio("Choose", ["Home", "Cars Explorer", "Compare Cars"])
 st.sidebar.markdown("---")
 
 if page == "Home":
-    st.title("🚗 Car Dashboard -- Home")
-    st.markdown("This dashboard helps you explore the cars dataset and compare models side-by-side.")
+    st.markdown("""<div style='text-align: center; font-size: 50px; font-weight: bold; margin: 20px 0;'>
+    🚗 Car Dashboard 
+    """, unsafe_allow_html=True)
+    st.markdown("""<div style = 'text-align: center;'> This dashboard helps you explore the cars dataset and compare models side-by-side.""", unsafe_allow_html=True)
 
     st.header("About the Data")
     st.markdown(f"**Rows:** {df.shape[0]}")
@@ -45,10 +48,23 @@ if page == "Home":
     col1,col2= st.columns(2)
     with col1:
         if "Company" is not None :
-            top_Company = df['Company'].value_counts().sort_values(ascending=False).head(10).reset_index()
-            top_Company.columns = ['Company', 'Count']
-            st.bar_chart(top_Company.set_index('Company'))
+            plt.figure(figsize=(6, 4))
+            df['Company'].value_counts().sort_values(ascending=False).head(10).plot(kind='bar',color ='orange')
+            plt.title("Top companies")
+            st.pyplot(plt.gcf())
         else:
             st.write("No 'Company' column detected.")
+   
+    if 'Ex-Showroom_Price' in df.columns and 'Company' in df.columns:
+     with col2:
+        plt.figure(figsize=(6, 4))
+        df.groupby('Company')['Ex-Showroom_Price'].mean().sort_values(ascending=False).head(10).plot(kind='bar', color='orange')
+        plt.title("Avg Ex-Showroom Price")
+        plt.xticks(rotation=45)
+        st.pyplot(plt.gcf())
+    else:
+     st.warning("Required columns 'Ex-Showroom_Price' or 'Company' not found in dataset.")
+
+
 
 
