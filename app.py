@@ -133,10 +133,10 @@ elif page == "Cars Explorer":
 
             st.markdown("---")
 
-            st.subheader("🚘 Number of Variants per Model")
+            st.subheader("1. Number of Variants per Model")
             st.bar_chart(filtered["Variant"].value_counts())
 
-            st.subheader("🛠️ Drivetrain Distribution")
+            st.subheader("2. Drivetrain Distribution")
 
             drivetrain_counts = filtered["Drivetrain"].value_counts()
             fig, ax = plt.subplots()
@@ -145,7 +145,7 @@ elif page == "Cars Explorer":
             ax.set_ylabel("Drivetrain")
             st.pyplot(fig)
 
-            st.header("1. Price Comparison by Variant")
+            st.header("3. Price Comparison by Variant")
             if 'Variant' in filtered.columns and len(filtered) > 1:
                 fig, ax = plt.subplots(figsize=(12, 5))
                 
@@ -171,7 +171,7 @@ elif page == "Cars Explorer":
             else:
                 st.info("Not enough variants to compare")
 
-            st.header("2. Torque Comparison by Variant")
+            st.header("4. Torque Comparison by Variant")
             if 'Variant' in filtered.columns and len(filtered) > 1:
                 fig, ax = plt.subplots(figsize=(12, 5))
                 
@@ -197,7 +197,7 @@ elif page == "Cars Explorer":
             else:
                 st.info("Not enough variants to compare")
 
-            st.header("3. Fuel Type Distribution")
+            st.header("5. Fuel Type Distribution")
             if len(filtered['Fuel_Type'].unique()) > 1:
                 fig, ax = plt.subplots(figsize=(8, 8))
                 fuel_dist = filtered['Fuel_Type'].value_counts()
@@ -274,7 +274,7 @@ elif page == "Cars Explorer":
             else:
                 st.info("Not enough variants to compare")
 
-            st.header("9. Seating Capacity Distribution")
+            st.header("8. Seating Capacity Distribution")
             if len(filtered['Seating_Capacity'].unique()) > 1:
                 fig, ax = plt.subplots(figsize=(8, 5))
                 
